@@ -40,18 +40,42 @@ module.exports = {
 					}
 				}
 			},
-			{
-				test: /\.css$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					'css-loader'
-				]
-			},
       {
-        "test": /\.less$/,
-        "use": [
+        test: /\.css$/,
+        use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('cssnano')({
+                    preset: 'default',
+                  }),
+                ],
+              },
+            },
+          },
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('cssnano')({
+                    preset: 'default',
+                  }),
+                ],
+              },
+            },
+          },
           'less-loader',
         ]
       }
